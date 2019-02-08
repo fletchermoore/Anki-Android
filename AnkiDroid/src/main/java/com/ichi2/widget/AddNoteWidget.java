@@ -21,9 +21,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.ichi2.anki.NoteEditor;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.fletcheranki.NoteEditor;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.analytics.UsageAnalytics;
 
 import timber.log.Timber;
 

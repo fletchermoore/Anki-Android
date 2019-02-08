@@ -19,7 +19,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.fletcheranki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.hooks.Hooks;
 
 import org.json.JSONArray;

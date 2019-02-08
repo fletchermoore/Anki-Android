@@ -27,11 +27,11 @@ import android.os.AsyncTask;
 import android.os.PowerManager;
 import androidx.core.content.ContextCompat;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.exception.MediaSyncException;
-import com.ichi2.anki.exception.UnknownHttpResponseException;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.CollectionHelper;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.exception.MediaSyncException;
+import com.ichi2.fletcheranki.exception.UnknownHttpResponseException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HttpSyncer;

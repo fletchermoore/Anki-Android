@@ -28,7 +28,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
 import org.json.JSONArray;
@@ -531,8 +531,68 @@ public class Sched {
      * Return the next due card, or null.
      */
     private Card _getCard() {
+        return _getCardOnCustomSchedule();
+        //return _getCard_original_func();
+    }
+
+    /**
+     * trying out: new, then review, then learns
+     *
+     */
+    private Card _getCardOnCustomSchedule() {
+        // New cards left?
+        Card newCard = _getNewCard();
+        if (newCard != null) {
+            return newCard;
+        }
+
+        // no new cards. review cards?
+        Card revCard = _getRevCard();
+        if (revCard != null) {
+            return revCard;
+        }
+
+        /**
+         * default ordering and choosing of learn cards based on if the learn step is greater than 24hrs
+         * makes it a "day lrn card" (queue = 3). if the learn step size is less than a day, it is a "lrn card" (queue = 1)
+         *
+         * very bizzare scheduling is done
+         * two separate queues are filled (3 and 1)
+         * the "lrn cards" list is refreshed each time the queue of due cards is completed (transparent to the user)
+         * on each queue refresh they are randomized
+         *
+         * TODO: add my own logic for retreiving the next learn card.
+         * probably try just querying the database each time. not sure why this would be too slow
+         * and the logic would be simpler
+         * may be complicated to get the display count to be correct
+         */
+
+        // no new. no reviews
+        // day learning card due?
+        Card dayLearnCard = _getLrnDayCard();
+        if (dayLearnCard != null) {
+            return dayLearnCard;
+        }
+
+        // lastly,
+        // a non-day learning card?
+        return _getLrnCard(true);
+    }
+
+    /**
+     * original _getCard function before Fletcher came along and decided to try to re-write scheduler
+     *
+     * actually this has been edited to show reviews first every time
+     * */
+    private Card _getCard_original_func() {
+        // Card due for review?
+        Card c = _getRevCard();
+        if (c != null) {
+            return c;
+        }
+
         // learning card due?
-        Card c = _getLrnCard();
+        c = _getLrnCard();
         if (c != null) {
             return c;
         }
@@ -543,11 +603,7 @@ public class Sched {
                 return c;
             }
         }
-        // Card due for review?
-        c = _getRevCard();
-        if (c != null) {
-            return c;
-        }
+
         // day learning card due?
         c = _getLrnDayCard();
         if (c != null) {

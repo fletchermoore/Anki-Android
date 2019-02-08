@@ -23,7 +23,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
 
-import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.fletcheranki.exception.ConfirmModSchemaException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

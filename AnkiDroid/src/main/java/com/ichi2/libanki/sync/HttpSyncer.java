@@ -23,8 +23,8 @@ package com.ichi2.libanki.sync;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.exception.UnknownHttpResponseException;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;

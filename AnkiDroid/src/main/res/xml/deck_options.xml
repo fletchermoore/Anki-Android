@@ -16,7 +16,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki" >
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.fletcheranki" >
         <Preference
             android:summary="@string/deck_conf_group_summ" />
         <ListPreference
@@ -184,6 +184,16 @@
                 android:summary="@string/deck_conf_replayq_summ"
                 android:title="@string/deck_conf_replayq" />
         </PreferenceScreen>
+
+        <PreferenceScreen android:title="Learning Style" >
+
+            <CheckBoxPreference
+                android:key="cycleLearn"
+                android:summary="Continuously loop through new cards until learned."
+                android:title="Cycle New Cards" />
+
+        </PreferenceScreen>
+
         <PreferenceScreen android:title="@string/deck_conf_reminders">
             <CheckBoxPreference
                 android:key="reminderEnabled"

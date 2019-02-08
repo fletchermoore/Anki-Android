@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.fletcheranki.AnkiDroidApp;
 
 import timber.log.Timber;
 

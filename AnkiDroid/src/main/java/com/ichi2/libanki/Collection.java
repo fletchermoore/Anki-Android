@@ -24,11 +24,11 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CardUtils;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.CardUtils;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.UIUtils;
+import com.ichi2.fletcheranki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;

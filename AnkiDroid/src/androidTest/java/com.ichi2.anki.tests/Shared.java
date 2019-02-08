@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.tests;
+package com.ichi2.fletcheranki.tests;
 
 import android.app.Activity;
 import android.content.Context;

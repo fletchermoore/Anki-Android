@@ -28,11 +28,11 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.IntentHandler;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.IntentHandler;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.fletcheranki.analytics.UsageAnalytics;
 
 import timber.log.Timber;
 

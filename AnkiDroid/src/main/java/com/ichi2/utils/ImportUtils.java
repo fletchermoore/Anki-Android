@@ -10,10 +10,10 @@ import android.os.Message;
 import android.provider.OpenableColumns;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.dialogs.DialogHandler;
+import com.ichi2.fletcheranki.AnkiActivity;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.dialogs.DialogHandler;
 import com.ichi2.compat.CompatHelper;
 
 import java.io.File;

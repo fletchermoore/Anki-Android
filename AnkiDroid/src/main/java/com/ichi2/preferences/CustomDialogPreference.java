@@ -23,9 +23,9 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.MetaDB;
+import com.ichi2.fletcheranki.R;
 
 public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
     private Context mContext;

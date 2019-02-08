@@ -21,7 +21,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.fletcheranki.AnkiDroidApp;
 import com.ichi2.libanki.LaTeX;
 
 import java.util.ArrayList;

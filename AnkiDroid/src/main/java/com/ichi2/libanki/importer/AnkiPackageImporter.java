@@ -18,8 +18,8 @@ package com.ichi2.libanki.importer;
 
 
 import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.BackupManager;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;

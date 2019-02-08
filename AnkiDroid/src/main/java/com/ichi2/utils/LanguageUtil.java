@@ -16,8 +16,8 @@ package com.ichi2.utils;
 
 import android.text.TextUtils;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Preferences;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.Preferences;
 
 import java.util.Locale;
 

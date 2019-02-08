@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.fletcheranki.AnkiDroidApp;
 
 import timber.log.Timber;
 

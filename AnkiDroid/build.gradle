@@ -11,10 +11,10 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId "com.ichi2.fletcheranki"
         minSdkVersion 15
         targetSdkVersion 28
-        testApplicationId "com.ichi2.anki.tests"
+        testApplicationId "com.ichi2.fletcheranki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 

@@ -17,8 +17,8 @@ import android.text.Html;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiActivity;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
@@ -97,6 +97,6 @@ public class CompatV16 extends CompatV15 implements Compat {
     @Override
     public Uri getExportUri(Context context, File file) {
         // Use FileProvider for exporting (this requires Jellybean for reliable sending via migrateExtraStreamtoClipData())
-        return FileProvider.getUriForFile(context, "com.ichi2.anki.apkgfileprovider", file);
+        return FileProvider.getUriForFile(context, "com.ichi2.fletcheranki.apkgfileprovider", file);
     }
 }

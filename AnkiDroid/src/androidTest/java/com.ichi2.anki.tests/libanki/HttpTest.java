@@ -1,4 +1,4 @@
-package com.ichi2.anki.tests.libanki;
+package com.ichi2.fletcheranki.tests.libanki;
 
 import android.Manifest;
 import android.os.Build;

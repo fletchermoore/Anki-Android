@@ -34,9 +34,9 @@ import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.VideoView;
 
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.ReadText;
+import com.ichi2.fletcheranki.AbstractFlashcardViewer;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.ReadText;
 import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;

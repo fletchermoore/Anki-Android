@@ -23,7 +23,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.fletcheranki.AnkiDroidApp;
 
 public class NumberRangePreference extends EditTextPreference {
 

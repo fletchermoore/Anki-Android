@@ -21,10 +21,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.stats.OverviewStatsBuilder;
-import com.ichi2.anki.stats.StatsMetaInfo;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.stats.OverviewStatsBuilder;
+import com.ichi2.fletcheranki.stats.StatsMetaInfo;
 import com.ichi2.libanki.hooks.Hooks;
 
 import org.json.JSONException;

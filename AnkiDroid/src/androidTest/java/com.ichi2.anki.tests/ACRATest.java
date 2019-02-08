@@ -1,4 +1,4 @@
-package com.ichi2.anki.tests;
+package com.ichi2.fletcheranki.tests;
 
 import android.Manifest;
 import android.app.Instrumentation;
@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
 
 import org.acra.ACRA;
 import org.acra.builder.ReportBuilder;

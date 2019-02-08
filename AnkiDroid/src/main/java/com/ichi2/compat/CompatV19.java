@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AbstractFlashcardViewer;
+import com.ichi2.fletcheranki.AnkiActivity;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.themes.Themes;
 
 /** Implementation of {@link Compat} for SDK level 19 */

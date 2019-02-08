@@ -3,7 +3,7 @@ package com.ichi2.libanki;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

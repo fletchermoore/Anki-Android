@@ -1,11 +1,11 @@
-package com.ichi2.anki.tests.libanki;
+package com.ichi2.fletcheranki.tests.libanki;
 
 import android.Manifest;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.os.Build;
 
-import com.ichi2.anki.CollectionHelper;
+import com.ichi2.fletcheranki.CollectionHelper;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.DB;
 

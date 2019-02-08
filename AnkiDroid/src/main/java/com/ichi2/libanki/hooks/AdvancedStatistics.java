@@ -22,9 +22,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.stats.StatsMetaInfo;
+import com.ichi2.fletcheranki.CollectionHelper;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Stats;

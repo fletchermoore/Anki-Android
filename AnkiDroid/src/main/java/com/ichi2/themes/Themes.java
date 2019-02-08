@@ -23,8 +23,8 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import androidx.core.content.ContextCompat;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
 
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%

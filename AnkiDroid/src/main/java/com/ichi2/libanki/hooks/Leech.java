@@ -21,7 +21,7 @@ import android.content.res.Resources;
 
 import android.widget.Toast;
 
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.libanki.Card;
 
 import timber.log.Timber;

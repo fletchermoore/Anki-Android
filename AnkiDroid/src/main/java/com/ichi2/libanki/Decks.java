@@ -23,8 +23,8 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.text.TextUtils;
 
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.fletcheranki.exception.ConfirmModSchemaException;
+import com.ichi2.fletcheranki.exception.DeckRenameException;
 
 import org.json.JSONArray;
 import org.json.JSONException;

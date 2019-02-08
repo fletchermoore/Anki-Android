@@ -26,9 +26,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.dialogs.DatabaseErrorDialog;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.CollectionHelper;
+import com.ichi2.fletcheranki.dialogs.DatabaseErrorDialog;
 import com.ichi2.compat.CompatHelper;
 
 import java.lang.reflect.InvocationTargetException;

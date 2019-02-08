@@ -18,8 +18,8 @@ package com.ichi2.libanki.hooks;
 
 import android.content.res.Resources;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
 
 public class HintFilter {
     public void install(Hooks h) {

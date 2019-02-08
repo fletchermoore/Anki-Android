@@ -22,9 +22,9 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
+import com.ichi2.fletcheranki.AnkiDroidApp;
+import com.ichi2.fletcheranki.R;
+import com.ichi2.fletcheranki.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;

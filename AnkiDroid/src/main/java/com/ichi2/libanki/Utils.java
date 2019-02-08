@@ -28,9 +28,9 @@ import android.content.res.Resources;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 
-import com.ichi2.anki.AnkiFont;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
+import com.ichi2.fletcheranki.AnkiFont;
+import com.ichi2.fletcheranki.CollectionHelper;
+import com.ichi2.fletcheranki.R;
 import com.ichi2.compat.CompatHelper;
 
 import org.json.JSONArray;

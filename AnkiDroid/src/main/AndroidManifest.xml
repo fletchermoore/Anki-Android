@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.ichi2.anki"
+          package="com.ichi2.fletcheranki"
           android:installLocation="auto"
           android:versionCode="20900154"
           android:versionName="2.9alpha54">
@@ -61,7 +61,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="replace"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
+    <permission android:name="com.ichi2.fletcheranki.permission.READ_WRITE_DATABASE"
                 android:label="@string/read_write_permission_label"
                 android:description="@string/read_write_permission_description"
                 android:protectionLevel="dangerous" />
@@ -77,7 +77,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.ichi2.anki.AnkiDroidApp"
+        android:name=".AnkiDroidApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -86,7 +86,7 @@
         android:usesCleartextTraffic="true"
         android:largeHeap="true">
         <activity
-            android:name="com.ichi2.anki.IntentHandler"
+            android:name=".IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name">
@@ -134,19 +134,19 @@
 
             <!-- Tasker DO_SYNC intent -->
             <intent-filter>
-                <action android:name="com.ichi2.anki.DO_SYNC" />
+                <action android:name="com.ichi2.fletcheranki.DO_SYNC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:theme="@style/Theme_Dark_Compat.Launcher"
-            android:name="com.ichi2.anki.DeckPicker"
+            android:name=".DeckPicker"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name="com.ichi2.anki.StudyOptionsActivity"
+            android:name=".StudyOptionsActivity"
             android:exported="false"
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:label="StudyOptions"
@@ -154,10 +154,10 @@
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value=".DeckPicker" />
         </activity>
         <activity
-            android:name="com.ichi2.anki.CardBrowser"
+            android:name=".CardBrowser"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser"
@@ -165,7 +165,7 @@
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value=".DeckPicker" />
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -182,7 +182,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/model_editor_label" />
         <activity
-            android:name="com.ichi2.anki.Reviewer"
+            android:name=".Reviewer"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
@@ -190,30 +190,30 @@
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value=".DeckPicker" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.VideoPlayer"
+            android:name=".VideoPlayer"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name="com.ichi2.anki.MyAccount"
+            android:name=".MyAccount"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/menu_my_account" />
         <activity
-            android:name="com.ichi2.anki.Preferences"
+            android:name=".Preferences"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/preferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
-            android:name="com.ichi2.anki.DeckOptions"
+            android:name=".DeckOptions"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
@@ -225,12 +225,12 @@
             android:label="@string/deckpreferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
-            android:name="com.ichi2.anki.Info"
+            android:name=".Info"
             android:exported="false"
             android:configChanges="locale"
             android:label="@string/about_title" />
         <activity
-            android:name="com.ichi2.anki.NoteEditor"
+            android:name=".NoteEditor"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/fact_adder_intent_title" >
@@ -244,25 +244,25 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
+        <activity android:name=".analytics.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:process=":acra"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true" />
         <activity
-            android:name="com.ichi2.anki.Statistics"
+            android:name=".Statistics"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value=".DeckPicker" />
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.Previewer"
+            android:name=".Previewer"
             android:configChanges="locale"
             android:label="@string/preview_title" />
 
@@ -296,7 +296,7 @@
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
         <receiver
-            android:name="com.ichi2.anki.receiver.SdCardReceiver"
+            android:name=".receiver.SdCardReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -335,19 +335,19 @@
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
+            android:name=".multimediacard.activity.TranslationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_translation" >
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
+            android:name=".multimediacard.activity.LoadPronounciationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_load_pronounciation" >
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.CardTemplateEditor"
+            android:name=".CardTemplateEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
@@ -372,15 +372,15 @@
 
         <provider
             android:name=".provider.CardContentProvider"
-            android:authorities="com.ichi2.anki.flashcards"
+            android:authorities="com.ichi2.fletcheranki.flashcards"
             android:enabled="true"
             android:exported="true" >
-            <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
+            <meta-data android:name="com.ichi2.fletcheranki.provider.spec" android:value="2" />
         </provider>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.ichi2.anki.apkgfileprovider"
+            android:authorities="com.ichi2.fletcheranki.apkgfileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data

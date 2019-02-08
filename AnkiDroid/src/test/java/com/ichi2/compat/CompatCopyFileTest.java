@@ -16,7 +16,7 @@
 
 package com.ichi2.compat;
 
-import com.ichi2.anki.TestUtils;
+import com.ichi2.fletcheranki.TestUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
