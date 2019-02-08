@@ -541,9 +541,9 @@ public class Sched {
     private Card _getCard() {
         long did = mCol.getDecks().selected();
         JSONObject conf = mCol.getDecks().confForDid(did);
-        boolean isCycleLearn = conf.optBoolean("cycleLearn", false);
+        boolean isNewFirst = conf.optBoolean("newFirst", false);
 
-        if (isCycleLearn) {
+        if (isNewFirst) {
             return _getNextCardNewFirst();
         }
         else {
@@ -554,7 +554,7 @@ public class Sched {
     }
 
     /**
-     * if cycleLearn is selected in options
+     * if newFirst is selected in options
      * next card will be: new, then review, then learn
      */
     private Card _getNextCardNewFirst() {
@@ -582,7 +582,7 @@ public class Sched {
         return _getLrnCard(true);
     }
 
-    /** if cycleLearn is not set, select in this order: review, learn, new */
+    /** if newFirst is not set, select in this order: review, learn, new */
     private Card _getNextCardReviewFirst() {
         Card revCard = _getRevCard();
         if (revCard != null) {

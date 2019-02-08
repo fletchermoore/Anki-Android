@@ -188,9 +188,9 @@
         <PreferenceScreen android:title="Learning Style" >
 
             <CheckBoxPreference
-                android:key="cycleLearn"
-                android:summary="Continuously loop through new cards until learned."
-                android:title="Cycle New Cards" />
+                android:key="newFirst"
+                android:summary="Look at all new cards before reviewing and learning. If unchecked, new cards will not be shown until after all due cards."
+                android:title="Review new cards first" />
 
         </PreferenceScreen>
 

@@ -108,7 +108,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("showAnswerTimer", Boolean.toString(mOptions.getInt("timer") == 1));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
-                mValues.put("cycleLearn", Boolean.toString(mOptions.optBoolean("cycleLearn", false)));
+                mValues.put("newFirst", Boolean.toString(mOptions.optBoolean("newFirst", false)));
                 // new
                 JSONObject newOptions = mOptions.getJSONObject("new");
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
@@ -174,8 +174,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         Timber.i("Change value for key '" + key + "': " + value);
 
                         switch (key) {
-                            case "cycleLearn":
-                                mOptions.put("cycleLearn", value);
+                            case "newFirst":
+                                mOptions.put("newFirst", value);
                                 break;
                             case "maxAnswerTime":
                                 mOptions.put("maxTaken", value);
