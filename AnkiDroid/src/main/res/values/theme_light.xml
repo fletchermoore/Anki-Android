@@ -12,9 +12,9 @@ See Android bug https://code.google.com/p/android/issues/detail?id=26251
 APIs. It's visible when there aren't enough decks to fill the screen.
 -->
 <resources>
-    <color name="theme_light_primary">@color/material_light_blue_500</color>
-    <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
-    <color name="theme_light_primary_light">@color/material_light_blue_100</color>
+    <color name="theme_light_primary">@color/material_green_500</color>
+    <color name="theme_light_primary_dark">@color/material_green_700</color>
+    <color name="theme_light_primary_light">@color/material_green_200</color>
     <color name="theme_light_accent">@color/material_blue_grey_700</color>
     <color name="theme_light_primary_text">@color/black</color>
     <color name="theme_light_secondary_text">#de000000</color>  <!-- 87% black -->
@@ -91,8 +91,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
         <!-- FAB -->
-        <item name="fab_normal">@color/material_light_blue_700</item>
-        <item name="fab_pressed">@color/material_light_blue_900</item>
+        <item name="fab_normal">@color/material_red_700</item>
+        <item name="fab_pressed">@color/material_red_900</item>
         <item name="fab_labelsTextColor">@color/white</item>
         <item name="fab_background">@color/material_grey_700</item>
         <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
