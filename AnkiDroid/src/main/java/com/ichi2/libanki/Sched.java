@@ -539,15 +539,25 @@ public class Sched {
      * Return the next due card, or null.
      */
     private Card _getCard() {
-        return _getCardOnCustomSchedule();
+        long did = mCol.getDecks().selected();
+        JSONObject conf = mCol.getDecks().confForDid(did);
+        boolean isCycleLearn = conf.optBoolean("cycleLearn", false);
+
+        if (isCycleLearn) {
+            return _getNextCardNewFirst();
+        }
+        else {
+            return _getNextCardReviewFirst();
+        }
+
         //return _getCard_original_func();
     }
 
     /**
-     * trying out: new, then review, then learns
-     *
+     * if cycleLearn is selected in options
+     * next card will be: new, then review, then learn
      */
-    private Card _getCardOnCustomSchedule() {
+    private Card _getNextCardNewFirst() {
         // New cards left?
         Card newCard = _getNewCard();
         if (newCard != null) {
@@ -559,21 +569,6 @@ public class Sched {
         if (revCard != null) {
             return revCard;
         }
-
-        /**
-         * default ordering and choosing of learn cards based on if the learn step is greater than 24hrs
-         * makes it a "day lrn card" (queue = 3). if the learn step size is less than a day, it is a "lrn card" (queue = 1)
-         *
-         * very bizzare scheduling is done
-         * two separate queues are filled (3 and 1)
-         * the "lrn cards" list is refreshed each time the queue of due cards is completed (transparent to the user)
-         * on each queue refresh they are randomized
-         *
-         * TODO: add my own logic for retreiving the next learn card.
-         * probably try just querying the database each time. not sure why this would be too slow
-         * and the logic would be simpler
-         * may be complicated to get the display count to be correct
-         */
 
         // no new. no reviews
         // day learning card due?
@@ -587,11 +582,45 @@ public class Sched {
         return _getLrnCard(true);
     }
 
+    /** if cycleLearn is not set, select in this order: review, learn, new */
+    private Card _getNextCardReviewFirst() {
+        Card revCard = _getRevCard();
+        if (revCard != null) {
+            return revCard;
+        }
+
+        Card dayLearnCard = _getLrnDayCard();
+        if (dayLearnCard != null) {
+            return dayLearnCard;
+        }
+
+        Card learnCard = _getLrnCard();
+        if (learnCard != null) {
+            return learnCard;
+        }
+
+        return _getNewCard();
+    }
+
     /**
      * original _getCard function before Fletcher came along and decided to try to re-write scheduler
      *
      * actually this has been edited to show reviews first every time
-     * */
+     *
+     *
+     * default ordering and choosing of learn cards based on if the learn step is greater than 24hrs
+     * makes it a "day lrn card" (queue = 3). if the learn step size is less than a day, it is a "lrn card" (queue = 1)
+     *
+     * very bizzare scheduling is done
+     * two separate queues are filled (3 and 1)
+     * the "lrn cards" list is refreshed each time the queue of due cards is completed (transparent to the user)
+     * on each queue refresh they are randomized
+     *
+     * TODO: add my own logic for retreiving the next learn card.
+     * probably try just querying the database each time. not sure why this would be too slow
+     * and the logic would be simpler
+     * may be complicated to get the display count to be correct
+     */
     private Card _getCard_original_func() {
         // Card due for review?
         Card c = _getRevCard();
