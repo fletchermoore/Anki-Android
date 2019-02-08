@@ -31,7 +31,7 @@
             android:key="deckPath"
             android:summary="@string/preference_summary_literal"
             android:title="@string/col_path" />
-        <Preference
+        <com.ichi2.ui.ConfirmationPreference
             android:key="force_full_sync"
             android:title="@string/force_full_sync_title"
             android:summary="@string/force_full_sync_summary" />
@@ -76,6 +76,15 @@
                 android:key="providerEnabled"
                 android:summary="@string/enable_api_summary"
                 android:title="@string/enable_api_title"/>
+            <Preference
+                android:key="thirdpartyapps_link"
+                android:summary="@string/thirdparty_apps_summary"
+                android:title="@string/thirdparty_apps_title">
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps"
+                    />
+            </Preference>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tts"

@@ -39,6 +39,7 @@ import android.widget.FrameLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.fletcheranki.dialogs.ConfirmationDialog;
 import com.ichi2.fletcheranki.dialogs.IntegerDialog;
+import com.ichi2.fletcheranki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -81,18 +82,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     };
 
     /** We need to listen for and handle repositions / reschedules / resets very similarly */
-    abstract class ScheduleDeckTaskListener extends DeckTask.TaskListener {
+    abstract class ScheduleDeckTaskListener extends NextCardHandler {
 
         abstract protected int getToastResourceId();
 
-        @Override
-        public void onPreExecute() {
-            Timber.d("Reviewer::ScheduleDeckTaskListener() onPreExecute");
-        }
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Reviewer::ScheduleDeckTaskListener() onPostExecute");
+            super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(Reviewer.this,
@@ -309,6 +306,17 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void showRepositionCardDialog() {
+
+        // Only new cards may be repositioned
+        if (mCurrentCard.getQueue() != Card.TYPE_NEW) {
+            SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
+                    getString(R.string.vague_error),
+                    getString(R.string.reposition_card_not_new_error),
+                    false);
+            showDialogFragment(dialog);
+            return;
+        }
+
         IntegerDialog repositionDialog = new IntegerDialog();
         repositionDialog.setArgs(
                 getResources().getString(R.string.reposition_card_dialog_title),

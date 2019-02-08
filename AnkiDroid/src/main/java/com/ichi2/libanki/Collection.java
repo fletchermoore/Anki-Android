@@ -29,6 +29,7 @@ import com.ichi2.fletcheranki.CardUtils;
 import com.ichi2.fletcheranki.R;
 import com.ichi2.fletcheranki.UIUtils;
 import com.ichi2.fletcheranki.exception.ConfirmModSchemaException;
+import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
@@ -102,6 +103,9 @@ public class Collection {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
+    private static final int fDefaultSchedulerVersion = 1;
+    private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
+
     // other options
     public static final String defaultConf = "{"
             +
@@ -165,7 +169,7 @@ public class Collection {
         }
         mStartReps = 0;
         mStartTime = 0;
-        mSched = new Sched(this);
+        _loadScheduler();
         if (!mConf.optBoolean("newBury", false)) {
             try {
                 mConf.put("newBury", true);
@@ -181,6 +185,54 @@ public class Collection {
         String n = (new File(mPath)).getName().replace(".anki2", "");
         // TODO:
         return n;
+    }
+
+
+    /**
+     * Scheduler
+     * ***********************************************************
+     */
+
+
+    private int schedVer() {
+        int ver = mConf.optInt("schedVer", fDefaultSchedulerVersion);
+        if (fSupportedSchedulerVersions.contains(ver)) {
+            return ver;
+        } else {
+            throw new RuntimeException("Unsupported scheduler version");
+        }
+    }
+
+    private void _loadScheduler() {
+        int ver = schedVer();
+        if (ver == 1) {
+            mSched = new Sched(this);
+        } else if (ver == 2) {
+            mSched = new SchedV2(this);
+        }
+    }
+
+    private void changeSchedulerVer(Integer ver) throws ConfirmModSchemaException {
+        if (ver == schedVer()) {
+            return;
+        }
+        if (!fSupportedSchedulerVersions.contains(ver)) {
+            throw new RuntimeException("Unsupported scheduler version");
+        }
+        modSchema(true);
+        SchedV2 v2Sched = new SchedV2(this);
+        if (ver == 1) {
+            v2Sched.moveToV1();
+        } else {
+            v2Sched.moveToV2();
+        }
+        try {
+            mConf.put("schedVer", ver);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        setMod();
+        _loadScheduler();
     }
 
 
@@ -1491,20 +1543,25 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
-    public long fixIntegrity() {
+    public long fixIntegrity(DeckTask.ProgressCallback progressCallback) {
         File file = new File(mPath);
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
+        int currentTask = 1;
+        int totalTasks = (mModels.all().size() * 4) + 18; // 4 things are in all-models loops, 18 things are one-offs
         try {
             mDb.getDatabase().beginTransaction();
             try {
                 save();
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
                     return -1;
                 }
                 // note types with a missing model
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 ArrayList<Long> ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() != 0) {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
 	                _remNotes(Utils.arrayList2array(ids));
@@ -1512,6 +1569,7 @@ public class Collection {
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     // cards with invalid ordinal
+                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                     if (m.getInt("type") == Consts.MODEL_STD) {
                         ArrayList<Integer> ords = new ArrayList<>();
                         JSONArray tmpls = m.getJSONArray("tmpls");
@@ -1530,6 +1588,7 @@ public class Collection {
                     ids = new ArrayList<>();
                     Cursor cur = null;
                     try {
+                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                         cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
                         while (cur.moveToNext()) {
                             String flds = cur.getString(1);
@@ -1544,6 +1603,7 @@ public class Collection {
                                 ids.add(id);
                             }
                         }
+                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                         if (ids.size() > 0) {
                             problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
                             _remNotes(Utils.arrayList2array(ids));
@@ -1554,23 +1614,29 @@ public class Collection {
                         }
                     }
                 }
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 // delete any notes with missing cards
                 ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() != 0) {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
                 // cards with missing notes
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() != 0) {
                     problems.add("Deleted " + ids.size() + " card(s) with missing note.");
                     remCards(Utils.arrayList2array(ids));
                 }
                 // cards with odue set when it shouldn't be
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 ids = mDb.queryColumn(Long.class,
                         "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() != 0) {
                     problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
                     mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
@@ -1582,25 +1648,32 @@ public class Collection {
                         dids.add(id);
                     }
                 }
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 ids = mDb.queryColumn(Long.class,
                         "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() != 0) {
                     problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
                     mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
                 }
                 // tags
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 mTags.registerNotes();
                 // field cache
                 for (JSONObject m : mModels.all()) {
+                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                     updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
                 }
                 // new cards can't have a due position > 32 bits
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
                         + " WHERE due > 1000000 AND queue = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() > 0) {
                 	problems.add("Reviews had incorrect due date.");
                     mDb.execute("UPDATE cards SET due = 0, mod = " + Utils.intNow() + ", usn = " + usn()
@@ -1608,6 +1681,7 @@ public class Collection {
                 }
                 mDb.getDatabase().setTransactionSuccessful();
                 // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
                 if (ixs < 7) {
                     problems.add("Indices were missing.");
@@ -1624,7 +1698,7 @@ public class Collection {
             return -1;
         }
         // and finally, optimize
-        optimize();
+        optimize(progressCallback, currentTask, totalTasks);
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
@@ -1636,11 +1710,19 @@ public class Collection {
     }
 
 
-    public void optimize() {
+    public void optimize(DeckTask.ProgressCallback progressCallback, int currentTask, int totalTasks) {
         Timber.i("executing VACUUM statement");
+        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
         mDb.execute("VACUUM");
         Timber.i("executing ANALYZE statement");
+        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
         mDb.execute("ANALYZE");
+    }
+
+
+    private void fixIntegrityProgress(DeckTask.ProgressCallback progressCallback, int current, int total) {
+        progressCallback.publishProgress(new DeckTask.TaskData(
+                progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
     }
 
 

@@ -57,6 +57,7 @@ import com.ichi2.fletcheranki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.fletcheranki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.fletcheranki.dialogs.ConfirmationDialog;
 import com.ichi2.fletcheranki.dialogs.IntegerDialog;
+import com.ichi2.fletcheranki.dialogs.SimpleMessageDialog;
 import com.ichi2.fletcheranki.dialogs.TagsDialog;
 import com.ichi2.fletcheranki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.fletcheranki.receiver.SdCardReceiver;
@@ -80,10 +81,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -163,7 +165,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
-    private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
+    private Set<Integer> mCheckedCardPositions = new LinkedHashSet<>();
     private int mLastSelectedPosition;
     private Menu mActionBarMenu;
 
@@ -903,10 +905,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_preview: {
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                previewer.putExtra("index", 0);
-                if (mInMultiSelectMode) {
+                if (mInMultiSelectMode && mCheckedCardPositions.size() > 1) {
+                    // Multiple cards have been explicitly selected, so preview only those cards
+                    previewer.putExtra("index", 0);
                     previewer.putExtra("cardList", getSelectedCardIds());
                 } else {
+                    // Preview all cards, starting from the one that is currently selected
+                    int startIndex = mCheckedCardPositions.isEmpty() ? 0: mCheckedCardPositions.iterator().next();
+                    previewer.putExtra("index", startIndex);
                     previewer.putExtra("cardList", getAllCardIds());
                 }
                 startActivityWithoutAnimation(previewer);
@@ -948,6 +954,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             case R.id.action_reposition_cards: {
                 Timber.i("CardBrowser:: Reposition button pressed");
+
+                // Only new cards may be repositioned
+                long[] cardIds = getSelectedCardIds();
+                for (int i = 0; i < cardIds.length; i++) {
+                    if (getCol().getCard(cardIds[i]).getQueue() != Card.TYPE_NEW) {
+                        SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
+                                getString(R.string.vague_error),
+                                getString(R.string.reposition_card_not_new_error),
+                                false);
+                        showDialogFragment(dialog);
+                        return false;
+                    }
+                }
+
                 IntegerDialog repositionDialog = new IntegerDialog();
                 repositionDialog.setArgs(
                         getString(R.string.reposition_card_dialog_title),
@@ -956,7 +976,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
                     public void run() {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
-                                new DeckTask.TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.REPOSITION_CARDS, this.getInt()}));
+                                new DeckTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));
                     }
                 });
                 showDialogFragment(repositionDialog);
